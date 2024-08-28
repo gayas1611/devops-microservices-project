@@ -12,18 +12,18 @@ spec:
       labels:
         app: user-service
     spec:
-  containers:
-  - name: user-service
-    image: ${DOCKER_USERNAME}/user-service:latest
-    ports:
-    - containerPort: 5000
-    resources:
-      limits:
-        cpu: "0.5"
-        memory: "256Mi"
-      requests:
-        cpu: "0.25"
-        memory: "128Mi"
+      containers:
+      - name: user-service
+        image: shaikgayas/user-service:latest
+        ports:
+        - containerPort: 5000
+        resources:
+          limits:
+            cpu: "0.5"
+            memory: "256Mi"
+          requests:
+            cpu: "0.25"
+            memory: "128Mi"
 ---
 apiVersion: v1
 kind: Service

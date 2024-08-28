@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_USERNAME = 'shaikgayas'
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -11,9 +14,9 @@ pipeline {
                 sh 'docker-compose build'
                 sh 'docker-compose up -d'
                 sh 'sleep 10'  // Wait for services to start
-                sh 'curl http://localhost:5000/health'
-                sh 'curl http://localhost:5001/health'
-                sh 'curl http://localhost:5002/health'
+                sh 'curl http://localhost:5000/health || exit 1'
+                sh 'curl http://localhost:5001/health || exit 1'
+                sh 'curl http://localhost:5002/health || exit 1'
                 sh 'docker-compose down'
             }
         }
@@ -24,6 +27,18 @@ pipeline {
                     sh 'docker-compose push'
                 }
             }
+        }
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f k8s/'
+                sh 'kubectl get pods'
+            }
+        }
+    }
+    post {
+        always {
+            sh 'docker-compose down'
+            sh 'docker logout'
         }
     }
 }

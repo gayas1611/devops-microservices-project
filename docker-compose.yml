@@ -2,16 +2,16 @@ version: '3'
 services:
   user-service:
     build: ./user-service
-    image: ${DOCKER_USERNAME}/user-service:latest
+    image: shaikgayas/user-service:latest
     ports:
       - "5000:5000"
   product-service:
     build: ./product-service
-    image: ${DOCKER_USERNAME}/product-service:latest
+    image: shaikgayas/product-service:latest
     ports:
       - "5001:5001"
   order-service:
     build: ./order-service
-    image: ${DOCKER_USERNAME}/order-service:latest
+    image: shaikgayas/order-service:latest
     ports:
       - "5002:5002"
